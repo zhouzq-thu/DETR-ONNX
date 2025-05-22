@@ -1,16 +1,23 @@
 DETR models in ONNX format
 ==========================
 
-Currently supports:
-- [x] [DETR](https://github.com/facebookresearch/detr), 2020
-- [x] [Deformable-DETR](https://github.com/fundamentalvision/Deformable-DETR), 2021
-- [x] [LW-DETR](https://github.com/Atten4Vis/LW-DETR), 2024
-- [x] [RT-DETR](https://github.com/lyuwenyu/RT-DETR), 2024
-- [x] [RF-DETR](https://github.com/roboflow/rf-detr), 2025
+## Model Zoo
 
-> **NOTE**: The normalization using mean = [0.485, 0.456, 0.406] and std = [0.229, 0.224, 0.225] is fused in models.
+Algorithm|Supported|Year|Github Link|ONNX Link
+--|--|--|--|--
+DETR|✅|2020|[Link](https://github.com/facebookresearch/detr)|[Link](https://github.com/zhouzq-thu/DETR-ONNX/releases/download/v1.0.0/detr.onnx.zip)
+Deformable-DETR|✅|2021|[Link](https://github.com/fundamentalvision/Deformable-DETR)|[Link](https://github.com/zhouzq-thu/DETR-ONNX/releases/download/v1.0.0/deformable_detr.onnx.zip)
+LW-DETR|✅|2024|[Link](https://github.com/Atten4Vis/LW-DETR)|[Link](https://github.com/zhouzq-thu/DETR-ONNX/releases/download/v1.0.0/lw-detr.onnx.zip)
+RT-DETR|✅|2024|[Link](https://github.com/lyuwenyu/RT-DETR)|[Link](https://github.com/zhouzq-thu/DETR-ONNX/releases/download/v1.0.0/rt-detrv2.onnx.zip)
+RF-DETR|✅|2025|[Link](https://github.com/roboflow/rf-detr)|[Link](https://github.com/zhouzq-thu/DETR-ONNX/releases/download/v1.0.0/rf-detr.onnx.zip)
+
+Download weights from [Release](https://github.com/zhouzq-thu/DETR-ONNX/releases), then put them into `models` folder.
+
+> **NOTE**: The ONNX models already fused the image normalization using mean = [0.485, 0.456, 0.406] and std = [0.229, 0.224, 0.225].
 
 ## Model info
+
+The input shape of these models are dynamic (batch size and image size).
 
 - Inputs:
   - input: ['N', 3, 'H', 'W'] (FLOAT)
@@ -18,7 +25,7 @@ Currently supports:
   - logits: ['N', 300, 80 or 91] (FLOAT)
   - boxes: ['N', 300, 4] (FLOAT)
 
-You can use the following script to get model infos.
+You can view ONNX models use [netron](https://github.com/lutzroeder/netron) or use the following script to get some model infos.
 
 ```python
 import onnxruntime as ort
