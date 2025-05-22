@@ -25,7 +25,7 @@ The input shape of these models are dynamic (batch size and image size).
   - logits: ['N', 300, 80 or 91] (FLOAT)
   - boxes: ['N', 300, 4] (FLOAT)
 
-You can view ONNX models use [netron](https://github.com/lutzroeder/netron) or use the following script to get some model infos.
+You can view ONNX models with [netron](https://github.com/lutzroeder/netron) or use the following script to get some model infos.
 
 ```python
 import onnxruntime as ort
