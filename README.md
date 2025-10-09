@@ -3,13 +3,14 @@ DETR models in ONNX format
 
 ## Model Zoo
 
-Algorithm|Supported|Year|Github Link|ONNX Link
---|--|--|--|--
+Algorithm|Supported|Year|Github Link|ONNX Link|Note
+--|--|--|--|--|--
 DETR|✅|2020|[Link](https://github.com/facebookresearch/detr)|[Link](https://github.com/zhouzq-thu/DETR-ONNX/releases/download/v1.0.0/detr.onnx.zip)
 Deformable-DETR|✅|2021|[Link](https://github.com/fundamentalvision/Deformable-DETR)|[Link](https://github.com/zhouzq-thu/DETR-ONNX/releases/download/v1.0.0/deformable_detr.onnx.zip)
 LW-DETR|✅|2024|[Link](https://github.com/Atten4Vis/LW-DETR)|[Link](https://github.com/zhouzq-thu/DETR-ONNX/releases/download/v1.0.0/lw-detr.onnx.zip)
-RT-DETR|✅|2024|[Link](https://github.com/lyuwenyu/RT-DETR)|[Link](https://github.com/zhouzq-thu/DETR-ONNX/releases/download/v1.0.0/rt-detrv2.onnx.zip)
+RT-DETR|✅|2024|[Link](https://github.com/lyuwenyu/RT-DETR)|[Link](https://github.com/zhouzq-thu/DETR-ONNX/releases/download/v1.0.0/rtdetrv2_r50vd_m_7x_coco_ema.onnx.zip)|Use focal loss
 RF-DETR|✅|2025|[Link](https://github.com/roboflow/rf-detr)|[Link](https://github.com/zhouzq-thu/DETR-ONNX/releases/download/v1.0.0/rf-detr.onnx.zip)
+DEIMv2|✅|2025|[Link](https://github.com/Intellindust-AI-Lab/DEIMv2)|[Link](https://github.com/zhouzq-thu/DETR-ONNX/releases/download/v1.0.0/deimv2_dinov3_x_coco.onnx.zip)|Use focal loss
 
 Download weights from [Release](https://github.com/zhouzq-thu/DETR-ONNX/releases), then put them into `models` folder.
 
@@ -22,8 +23,10 @@ The input shape of these models are dynamic (batch size and image size).
 - Inputs:
   - input: ['N', 3, 'H', 'W'] (FLOAT)
 - Outputs:
-  - logits: ['N', 300, 80 or 91] (FLOAT)
+  - logits: ['N', 300, 80 or 91 or 301] (FLOAT)
   - boxes: ['N', 300, 4] (FLOAT)
+
+Some models use focal loss instead of cross entropy loss.
 
 You can view ONNX models with [netron](https://github.com/lutzroeder/netron), which can visualize the shape of each layer.
 ![](models/rf-detr.png)

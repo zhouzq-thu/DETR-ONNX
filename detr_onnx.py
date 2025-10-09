@@ -3,6 +3,9 @@ import numpy as np
 from scipy.special import softmax
 import onnxruntime as ort
 
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
+
 def box_cxcywh_to_xyxy(x):
     x_c, y_c, w, h = x[..., 0], x[..., 1], x[..., 2], x[..., 3]
     b = [(x_c - 0.5 * w), (y_c - 0.5 * h),
@@ -35,6 +38,7 @@ class DetrONNX:
         self.input_shape = self.sess.get_inputs()[0].shape
         meta = self.sess.get_modelmeta().custom_metadata_map
         self.stride = int(meta.get('stride', -1))
+        self.use_focal_loss = int(meta.get('use_focal_loss', 0))
         self.class_names = eval(meta.get('names', '{}'))
     
     def detect(self, image: np.ndarray, prob_threshold = 0.7):
@@ -70,7 +74,12 @@ class DetrONNX:
         return img
 
 if __name__ == "__main__":
-    model_path = "models/rt-detrv2.onnx"
+    # model_path = "models/deformable_detr.onnx"
+    # model_path = "models/detr.onnx"
+    # model_path = "models/lw-detr.onnx"
+    # model_path = "models/rf-detr.onnx"
+    # model_path = "models/rtdetrv2_r50vd_m_7x_coco_ema.onnx"
+    model_path = "models/deimv2_dinov3_x_coco.onnx"
     detr = DetrONNX(model_path)
     
     img = cv.imread("images/kite.jpg")
