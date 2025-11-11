@@ -3,14 +3,14 @@ DETR models in ONNX format
 
 ## Model Zoo
 
-Algorithm|Supported|Year|Github Link|ONNX Link|Note
---|--|--|--|--|--
-DETR|✅|2020|[Link](https://github.com/facebookresearch/detr)|[Link](https://github.com/zhouzq-thu/DETR-ONNX/releases/download/v1.0.0/detr.onnx.zip)
-Deformable-DETR|✅|2021|[Link](https://github.com/fundamentalvision/Deformable-DETR)|[Link](https://github.com/zhouzq-thu/DETR-ONNX/releases/download/v1.0.0/deformable_detr.onnx.zip)
-LW-DETR|✅|2024|[Link](https://github.com/Atten4Vis/LW-DETR)|[Link](https://github.com/zhouzq-thu/DETR-ONNX/releases/download/v1.0.0/lw-detr.onnx.zip)
-RT-DETR|✅|2024|[Link](https://github.com/lyuwenyu/RT-DETR)|[Link](https://github.com/zhouzq-thu/DETR-ONNX/releases/download/v1.0.0/rtdetrv2_r50vd_m_7x_coco_ema.onnx.zip)|Use focal loss
-RF-DETR|✅|2025|[Link](https://github.com/roboflow/rf-detr)|[Link](https://github.com/zhouzq-thu/DETR-ONNX/releases/download/v1.0.0/rf-detr.onnx.zip)
-DEIMv2|✅|2025|[Link](https://github.com/Intellindust-AI-Lab/DEIMv2)|[Link](https://github.com/zhouzq-thu/DETR-ONNX/releases/download/v1.0.0/deimv2_dinov3_x_coco.onnx.zip)|Use focal loss
+Algorithm|Supported|Year|Github Link|Note
+--|--|--|--|--
+DETR|✅|2020|[Link](https://github.com/facebookresearch/detr)
+Deformable-DETR|✅|2021|[Link](https://github.com/fundamentalvision/Deformable-DETR)
+LW-DETR|✅|2024|[Link](https://github.com/Atten4Vis/LW-DETR)
+RT-DETR|✅|2024|[Link](https://github.com/lyuwenyu/RT-DETR)|Use focal loss
+RF-DETR|✅|2025|[Link](https://github.com/roboflow/rf-detr)
+DEIMv2|✅|2025|[Link](https://github.com/Intellindust-AI-Lab/DEIMv2)|Use focal loss
 
 Download weights from [Release](https://github.com/zhouzq-thu/DETR-ONNX/releases), then put them into `models` folder.
 
@@ -47,6 +47,7 @@ class_names = eval(meta.get('names', '{}'))
 
 ## Usage
 
+### python
 ```python
 import cv2 as cv
 from detr_onnx import DetrONNX
@@ -60,4 +61,12 @@ res = detr.plot_result(img, prob, boxes)
 
 cv.imshow("res", res)
 cv.waitKey(0)
+```
+
+### C++
+
+```sh
+mkdir build && cd build
+cmake ../cpp
+# Usage: ./build/detr_onnx <model_path> <image_path>
 ```
