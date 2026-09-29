@@ -57,9 +57,13 @@ class DetrONNX:
         img = np.ascontiguousarray(img.transpose(0, 3, 1, 2))
         
         ort_inputs = {self.input_name: img}
-        scores, boxes = self.sess.run(None, ort_inputs)
+        logits, boxes = self.sess.run(None, ort_inputs)
+        logits, boxes = np.array(logits), np.array(boxes)
         
-        probas = softmax(np.array(scores), axis=-1)[0, :, :-1]
+        if self.use_focal_loss:
+            probas = sigmoid(logits)[0]
+        else:
+            probas = softmax(logits, axis=-1)[0, :, :-1]
         keep = np.max(probas, axis=-1) > prob_threshold
         bboxes_xyxy = rescale_bboxes(boxes[0, keep], image.shape[:2][::-1])
         return probas[keep], bboxes_xyxy
@@ -79,7 +83,8 @@ if __name__ == "__main__":
     # model_path = "models/lw-detr.onnx"
     # model_path = "models/rf-detr.onnx"
     # model_path = "models/rtdetrv2_r50vd_m_7x_coco_ema.onnx"
-    model_path = "models/deimv2_dinov3_x_coco.onnx"
+    # model_path = "models/deimv2_dinov3_x_coco.onnx"
+    model_path = "models/ecdet_s.onnx"
     detr = DetrONNX(model_path)
     
     img = cv.imread("images/kite.jpg")

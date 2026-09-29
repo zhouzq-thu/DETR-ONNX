@@ -78,6 +78,20 @@ softmax2d(const std::vector<std::vector<float>> &logits) {
   return probas;
 }
 
+// Softmax for 2D matrix (rows = queries, cols = classes)
+std::vector<std::vector<float>>
+sigmoid2d(const std::vector<std::vector<float>> &logits) {
+  std::vector<std::vector<float>> probas(logits.size());
+  for (size_t i = 0; i < logits.size(); ++i) {
+    const auto &row = logits[i];
+    probas[i].resize(row.size());
+    for (size_t j = 0; j < row.size(); ++j) {
+      probas[i][j] = 1 / (1 + expf(-row[j]));
+    }
+  }
+  return probas;
+}
+
 // Convert (cx, cy, w, h) -> (x1, y1, x2, y2)
 std::vector<float> cxcywh_to_xyxy(const std::vector<float> &box) {
   float cx = box[0], cy = box[1], w = box[2], h = box[3];
@@ -210,7 +224,12 @@ public:
       }
     }
 
-    auto probas = softmax2d(logits);
+    std::vector<std::vector<float>> probas;
+    if (useFocalLoss) {
+      probas = sigmoid2d(logits);
+    } else {
+      probas = softmax2d(logits);
+    }
 
     std::vector<Detection> detections;
     for (int i = 0; i < numQueries; ++i) {
